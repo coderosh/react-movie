@@ -33,7 +33,10 @@ const StyledInputWrapper = styled.div`
 const Search = ({ onSubmit }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    const value = e.target.movie.value.trim() || "movie/popular";
+    const value = e.target.movie.value.trim()
+      ? "query=" + e.target.movie.value.trim()
+      : "movie/popular";
+
     onSubmit(value);
   };
 

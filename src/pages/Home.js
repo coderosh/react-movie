@@ -51,7 +51,9 @@ const Home = () => {
 
       <Search onSubmit={setEndpoint} />
       <Container>
-        <h1>Popular</h1>
+        <h1>
+          {endpoint === "movie/popular" ? "Popular Movies" : "Search Result"}
+        </h1>
         <br />
         {isLoading ? (
           <Flex justify="center" style={{ padding: "50px 0" }}>

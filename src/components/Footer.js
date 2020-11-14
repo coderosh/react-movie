@@ -12,7 +12,7 @@ const StyledFooter = styled.div`
 
 const Footer = () => (
   <StyledFooter>
-    <Container>Made with ❤ by Roshan Acharya</Container>
+    <Container>Created By Roshan Acharya</Container>
   </StyledFooter>
 );
 

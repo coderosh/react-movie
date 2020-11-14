@@ -1,14 +1,22 @@
 import { useInfiniteQuery } from "react-query";
-import rawData from "./rawData.json";
+import axios from "axios";
 
 const fetchMovies = async (endpoint, page = 1) => {
-  console.log("HITTING NETWORK.........");
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    ...rawData,
-    results: [rawData.results[page]],
-    index: page,
-  };
+  let url;
+  if (endpoint === "movie/popular") {
+    url = `https://api.themoviedb.org/3/${endpoint}`;
+  } else {
+    url = `https://api.themoviedb.org/3/search/movie?${endpoint}`;
+  }
+
+  const response = await axios.get(url, {
+    params: {
+      page: page,
+      api_key: process.env.API_KEY,
+    },
+  });
+
+  return response.data;
 };
 
 const useMoviesQuery = (endpoint) => {
@@ -17,15 +25,11 @@ const useMoviesQuery = (endpoint) => {
     retry: false,
     enabled: endpoint,
     getFetchMore: (lastPage) => {
-      return lastPage.index + 1;
+      const newPage =
+        lastPage.page + 1 <= lastPage.total_pages ? lastPage.page + 1 : null;
+      return newPage;
     },
   });
 };
-
-// return axios
-// .get(
-//   `https://api.themoviedb.org/3/${endpoint}?api_key=${process.env.API_KEY}`
-// )
-// .then((res) => res.data);
 
 export default useMoviesQuery;
