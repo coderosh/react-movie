@@ -3,11 +3,11 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children }) => (
+const Layout = ({ children, showFooter }) => (
   <React.Fragment>
     <Header />
     {children}
-    <Footer />
+    {showFooter && <Footer />}
   </React.Fragment>
 );
 

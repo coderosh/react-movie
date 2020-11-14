@@ -1,75 +1,77 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
+import { queryCache } from "react-query";
 
 import Hero from "../components/Hero";
+import Flex from "../components/Flex";
 import Layout from "../components/Layout";
-import Movies from "../components/Movies";
 import Search from "../components/Search";
+import Movies from "../components/Movies";
+import Spinner from "../components/Spinner";
 import Container from "../components/Container";
+import useMoviesQuery from "../hooks/useMoviesQuery";
+import FetchMoreButton from "../components/FetchMoreButton";
 
 const Home = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const { data, isFetching } = useQuery(
-    "/todos",
-    async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+  const [endpoint, setEndpoint] = useState("movie/popular");
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchMore,
+    isFetchingMore,
+  } = useMoviesQuery(endpoint);
 
-      return axios
-        .get("https://jsonplaceholder.typicode.com/todos")
-        .then((res) => res.data);
-    },
-    {
-      staleTime: Infinity,
-    }
-  );
+  if (isLoading && endpoint === "movie/popular") {
+    return (
+      <div style={{ background: "#333" }}>
+        <Flex justify="center" style={{ minHeight: "100vh" }}>
+          <Spinner color="#ccc" />
+        </Flex>
+      </div>
+    );
+  }
 
-  console.log(data);
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    // search for movie
-    //set movies
-    console.log(searchInput);
-  };
-
-  const onChangeHandler = (e) => {
-    setSearchInput(e.target.value);
-  };
+  if (isError) {
+    return (
+      <div>
+        <h1>Something went wrong</h1>
+        <p>Try refreshing your browser.</p>
+      </div>
+    );
+  }
 
   return (
-    <Layout>
-      {isFetching && <h1>Updating todos.....</h1>}
+    <Layout showFooter>
       <Hero
-        title="The SpongeBob Movie: Sponge on the Run"
-        image="http://image.tmdb.org/t/p/w1280/wu1uilmhM4TdluKi2ytfz8gidHf.jpg"
+        title={getHeroData().original_title}
+        image={`http://image.tmdb.org/t/p/w1280${getHeroData().backdrop_path}`}
       >
-        When his best friend Gary is suddenly snatched away, SpongeBob takes
-        Patrick on a madcap mission far beyond Bikini Bottom to save their
-        pink-shelled pal.
+        {getHeroData().overview}
       </Hero>
 
-      <Search
-        onSubmit={onSubmitHandler}
-        value={searchInput}
-        onChange={onChangeHandler}
-      />
+      <Search onSubmit={setEndpoint} />
       <Container>
-        <h1>Trending</h1>
+        <h1>Popular</h1>
         <br />
-        <Movies
-          movies={[
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
-            { id: 6 },
-          ]}
-        />
+        {isLoading ? (
+          <Flex justify="center" style={{ padding: "50px 0" }}>
+            <Spinner color="black" />
+          </Flex>
+        ) : (
+          <Movies movies={data} />
+        )}
+        <Flex justify="center" style={{ margin: "10px 0px" }}>
+          <FetchMoreButton onClick={() => fetchMore()}>
+            {isFetchingMore ? "Loading..." : "Fech More"}
+          </FetchMoreButton>
+        </Flex>
       </Container>
     </Layout>
   );
 };
+
+function getHeroData() {
+  return queryCache.getQueryData("movie/popular")[0].results[0];
+}
 
 export default Home;

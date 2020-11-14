@@ -12,8 +12,12 @@ const Grid = styled.div`
 const Movies = ({ movies }) => {
   return (
     <Grid>
-      {movies.map((mData) => (
-        <Movie key={mData.id} data={mData} />
+      {movies.map((page, index) => (
+        <React.Fragment key={index}>
+          {page.results.map((movie) => (
+            <Movie key={movie.id} data={movie} />
+          ))}
+        </React.Fragment>
       ))}
     </Grid>
   );

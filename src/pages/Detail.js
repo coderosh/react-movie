@@ -2,9 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { FaImdb, FaMoneyCheckAlt, FaTicketAlt } from "react-icons/fa";
 
-import Container from "../components/Container";
 import Flex from "../components/Flex";
 import Layout from "../components/Layout";
+import Spinner from "../components/Spinner";
+import Container from "../components/Container";
+import useMovieQuery from "../hooks/useMovieQuery";
+
+import NotFoundImage from "../not-found-image.jpg";
 
 const MovieBackground = styled.div`
   background: url(${(props) => props.image}) center center / cover;
@@ -31,7 +35,7 @@ const MovieInfo = styled.div`
 `;
 
 const MovieDetail = styled.div`
-  background: rgba(0, 0, 0, 0.97);
+  background: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   height: 80%;
   width: 100%;
@@ -44,8 +48,16 @@ const MovieDetail = styled.div`
     border-radius: 20px;
   }
 
+  @media (max-width: 600px) {
+    img {
+      display: none;
+    }
+  }
+
   .details {
     padding-left: 20px;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .details .title {
@@ -63,31 +75,52 @@ const MovieDetail = styled.div`
   }
 `;
 
-const Detail = () => {
-  const url = "http://image.tmdb.org/t/p/w1280/zzWGRw277MNoCs3zhyG3YmYQsXv.jpg";
+const Detail = (props) => {
+  const { data, isLoading, isError } = useMovieQuery(props.id);
+
+  if (isError) {
+    return (
+      <div>
+        <h1>Something went wrong</h1>
+        <p>Try refreshing your browser.</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{ background: "#333" }}>
+        <Flex justify="center" style={{ minHeight: "100vh" }}>
+          <Spinner color="#ccc" />
+        </Flex>
+      </div>
+    );
+  }
+
+  console.log(data);
+
   return (
     <Layout>
-      <MovieBackground image={url}>
+      <MovieBackground
+        image={`http://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
+      >
         <Container as={Flex}>
           <MovieDetail as={Flex} justify="flex-start">
-            <img src="http://image.tmdb.org/t/p/w500/aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg" />
+            <img
+              src={
+                data.poster_path
+                  ? `http://image.tmdb.org/t/p/w500${data.poster_path}`
+                  : NotFoundImage
+              }
+            />
             <div className="details">
-              <h2 className="title">Mulan</h2>
+              <h2 className="title">{data.original_title}</h2>
               <br />
               <h3 className="title-h">PLOT</h3>
-              <p className="p-h">
-                When the Emperor of China issues a decree that one man per
-                family must serve in the Imperial Chinese Army to defend the
-                country from Huns, Hua Mulan, the eldest daughter of an honored
-                warrior, steps in to take the place of her ailing father. She is
-                spirited, determined and quick on her feet. Disguised as a man
-                by the name of Hua Jun, she is tested every step of the way and
-                must harness her innermost strength and embrace her true
-                potential.
-              </p>
+              <p className="p-h">{data.overview}</p>
               <br />
-              <h3 className="title-h">DIRECTOR</h3>
-              <p className="p-h">Niki Caro</p>
+              <h3 className="title-h">STATUS</h3>
+              <p className="p-h">{data.status}</p>
             </div>
           </MovieDetail>
         </Container>
@@ -96,15 +129,15 @@ const Detail = () => {
         <Container as={Flex}>
           <Flex>
             <FaImdb size="35px" />
-            <span>IMDB: 6.8</span>
+            <span>IMDB: {data.vote_average}</span>
           </Flex>
           <Flex>
             <FaMoneyCheckAlt size="35px" />
-            <span>Budget: $200,000,000</span>
+            <span>Budget: {`$${data.budget}`}</span>
           </Flex>
           <Flex>
             <FaTicketAlt size="35px" />
-            <span>Revenue: $57,000,000</span>
+            <span>Revenue: {`$${data.revenue}`}</span>
           </Flex>
         </Container>
       </MovieInfo>

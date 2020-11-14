@@ -30,17 +30,19 @@ const StyledInputWrapper = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.54);
 `;
 
-const Search = (props) => {
+const Search = ({ onSubmit }) => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const value = e.target.movie.value.trim() || "movie/popular";
+    onSubmit(value);
+  };
+
   return (
-    <Form onSubmit={props.onSubmit}>
+    <Form onSubmit={onSubmitHandler}>
       <Container>
         <StyledInputWrapper as={Flex}>
           <FaSearch size="25px" color="#333" />
-          <StyledInput
-            placeholder="Search Movie"
-            value={props.value}
-            onChange={props.onChange}
-          />
+          <StyledInput placeholder="Search Movie" name="movie" />
         </StyledInputWrapper>
       </Container>
     </Form>
