@@ -10,6 +10,19 @@ const Button = styled.button`
   cursor: pointer;
   border: none;
   outline: none;
+
+  &:hover {
+    background: #2c2c2c;
+  }
+
+  &:active {
+    background: #111;
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: default;
+  }
 `;
 
 const FetchMoreButton = ({ children, ...props }) => {

@@ -19,6 +19,7 @@ const Home = () => {
     isError,
     fetchMore,
     isFetchingMore,
+    canFetchMore,
   } = useMoviesQuery(endpoint);
 
   if (isLoading && endpoint === "movie/popular") {
@@ -63,7 +64,10 @@ const Home = () => {
           <Movies movies={data} />
         )}
         <Flex justify="center" style={{ margin: "10px 0px" }}>
-          <FetchMoreButton onClick={() => fetchMore()}>
+          <FetchMoreButton
+            disabled={!canFetchMore || isFetchingMore}
+            onClick={() => fetchMore()}
+          >
             {isFetchingMore ? "Loading..." : "Fech More"}
           </FetchMoreButton>
         </Flex>
