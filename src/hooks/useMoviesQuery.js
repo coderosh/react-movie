@@ -1,5 +1,7 @@
 import { useInfiniteQuery } from "react-query";
 
+import get from "../get";
+
 const fetchMovies = async (endpoint, page = 1) => {
   let url;
   if (endpoint === "movie/popular") {
@@ -8,14 +10,7 @@ const fetchMovies = async (endpoint, page = 1) => {
     url = `https://api.themoviedb.org/3/search/movie?${endpoint}`;
   }
 
-  const response = await axios.get(url, {
-    params: {
-      page: page,
-      api_key: process.env.API_KEY,
-    },
-  });
-
-  return response.data;
+  return await get(url, { page, api_key: process.env.API_KEY });
 };
 
 const useMoviesQuery = (endpoint) => {
