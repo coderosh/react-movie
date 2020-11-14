@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useInfiniteQuery } from "react-query";
 
 const fetchMovies = async (endpoint, page = 1) => {
