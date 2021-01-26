@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { queryCache } from "react-query";
+import React, { useState } from 'react'
+import { queryCache } from 'react-query'
 
-import Hero from "../components/Hero";
-import Flex from "../components/Flex";
-import Layout from "../components/Layout";
-import Search from "../components/Search";
-import Movies from "../components/Movies";
-import Spinner from "../components/Spinner";
-import Container from "../components/Container";
-import useMoviesQuery from "../hooks/useMoviesQuery";
-import FetchMoreButton from "../components/FetchMoreButton";
+import Hero from '../components/Hero'
+import Flex from '../components/Flex'
+import Layout from '../components/Layout'
+import Search from '../components/Search'
+import Movies from '../components/Movies'
+import Spinner from '../components/Spinner'
+import Container from '../components/Container'
+import useMoviesQuery from '../hooks/useMoviesQuery'
+import FetchMoreButton from '../components/FetchMoreButton'
 
 const Home = () => {
-  const [endpoint, setEndpoint] = useState("movie/popular");
+  const [endpoint, setEndpoint] = useState('movie/popular')
   const {
     data,
     isLoading,
@@ -20,16 +20,16 @@ const Home = () => {
     fetchMore,
     isFetchingMore,
     canFetchMore,
-  } = useMoviesQuery(endpoint);
+  } = useMoviesQuery(endpoint)
 
-  if (isLoading && endpoint === "movie/popular") {
+  if (isLoading && endpoint === 'movie/popular') {
     return (
-      <div style={{ background: "#333" }}>
-        <Flex justify="center" style={{ minHeight: "100vh" }}>
+      <div style={{ background: '#333' }}>
+        <Flex justify="center" style={{ minHeight: '100vh' }}>
           <Spinner color="#ccc" />
         </Flex>
       </div>
-    );
+    )
   }
 
   if (isError) {
@@ -38,7 +38,7 @@ const Home = () => {
         <h1>Something went wrong</h1>
         <p>Try refreshing your browser.</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -53,31 +53,31 @@ const Home = () => {
       <Search onSubmit={setEndpoint} />
       <Container>
         <h1>
-          {endpoint === "movie/popular" ? "Popular Movies" : "Search Result"}
+          {endpoint === 'movie/popular' ? 'Popular Movies' : 'Search Result'}
         </h1>
         <br />
         {isLoading ? (
-          <Flex justify="center" style={{ padding: "50px 0" }}>
+          <Flex justify="center" style={{ padding: '50px 0' }}>
             <Spinner color="black" />
           </Flex>
         ) : (
           <Movies movies={data} />
         )}
-        <Flex justify="center" style={{ margin: "10px 0px" }}>
+        <Flex justify="center" style={{ margin: '10px 0px' }}>
           <FetchMoreButton
             disabled={!canFetchMore || isFetchingMore}
             onClick={() => fetchMore()}
           >
-            {isFetchingMore ? "Loading..." : "Fech More"}
+            {isFetchingMore ? 'Loading...' : 'Fech More'}
           </FetchMoreButton>
         </Flex>
       </Container>
     </Layout>
-  );
-};
-
-function getHeroData() {
-  return queryCache.getQueryData("movie/popular")[0].results[0];
+  )
 }
 
-export default Home;
+function getHeroData() {
+  return queryCache.getQueryData('movie/popular')[0].results[0]
+}
+
+export default Home

@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const SpinnerWrapper = styled.div`
   display: inline-block;
@@ -9,7 +9,7 @@ const SpinnerWrapper = styled.div`
 
   div {
     position: absolute;
-    border: 4px solid ${(props) => props.color || "#fff"};
+    border: 4px solid ${(props) => props.color || '#fff'};
     opacity: 1;
     border-radius: 50%;
     animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
@@ -35,13 +35,13 @@ const SpinnerWrapper = styled.div`
       opacity: 0;
     }
   }
-`;
+`
 
 const Spinner = (props) => (
   <SpinnerWrapper {...props}>
     <div></div>
     <div></div>
   </SpinnerWrapper>
-);
+)
 
-export default Spinner;
+export default Spinner

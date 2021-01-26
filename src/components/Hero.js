@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Container from "../components/Container";
+import React from 'react'
+import styled from 'styled-components'
+import Container from '../components/Container'
 
 const HeroImage = styled.div`
   height: 600px;
@@ -12,14 +12,14 @@ const HeroImage = styled.div`
   @media (max-width: 600px) {
     display: none;
   }
-`;
+`
 
 const HeroContent = styled.div`
   position: absolute;
   color: #fff;
   bottom: 40px;
   width: 500px;
-`;
+`
 
 const Hero = (props) => (
   <HeroImage image={props.image}>
@@ -31,6 +31,6 @@ const Hero = (props) => (
       </HeroContent>
     </Container>
   </HeroImage>
-);
+)
 
-export default Hero;
+export default Hero

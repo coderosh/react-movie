@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { FaImdb, FaMoneyCheckAlt, FaTicketAlt } from "react-icons/fa";
+import React from 'react'
+import styled from 'styled-components'
+import { FaImdb, FaMoneyCheckAlt, FaTicketAlt } from 'react-icons/fa'
 
-import Flex from "../components/Flex";
-import Layout from "../components/Layout";
-import Spinner from "../components/Spinner";
-import Container from "../components/Container";
-import useMovieQuery from "../hooks/useMovieQuery";
+import Flex from '../components/Flex'
+import Layout from '../components/Layout'
+import Spinner from '../components/Spinner'
+import Container from '../components/Container'
+import useMovieQuery from '../hooks/useMovieQuery'
 
-import NotFoundImage from "../not-found-image.jpg";
+import NotFoundImage from '../not-found-image.jpg'
 
 const MovieBackground = styled.div`
   background: url(${(props) => props.image}) center center / cover;
@@ -16,7 +16,7 @@ const MovieBackground = styled.div`
   height: 500px;
   min-height: calc(100vh - 140px);
   width: 100%;
-`;
+`
 
 const MovieInfo = styled.div`
   height: 80px;
@@ -32,7 +32,7 @@ const MovieInfo = styled.div`
       display: none;
     }
   }
-`;
+`
 
 const MovieDetail = styled.div`
   background: rgba(0, 0, 0, 0.9);
@@ -73,10 +73,10 @@ const MovieDetail = styled.div`
   .p-h {
     font-weight: 300;
   }
-`;
+`
 
 const Detail = (props) => {
-  const { data, isLoading, isError } = useMovieQuery(props.id);
+  const { data, isLoading, isError } = useMovieQuery(props.id)
 
   if (isError) {
     return (
@@ -84,20 +84,20 @@ const Detail = (props) => {
         <h1>Something went wrong</h1>
         <p>Try refreshing your browser.</p>
       </div>
-    );
+    )
   }
 
   if (isLoading) {
     return (
-      <div style={{ background: "#333" }}>
-        <Flex justify="center" style={{ minHeight: "100vh" }}>
+      <div style={{ background: '#333' }}>
+        <Flex justify="center" style={{ minHeight: '100vh' }}>
           <Spinner color="#ccc" />
         </Flex>
       </div>
-    );
+    )
   }
 
-  console.log(data);
+  console.log(data)
 
   return (
     <Layout>
@@ -142,7 +142,7 @@ const Detail = (props) => {
         </Container>
       </MovieInfo>
     </Layout>
-  );
-};
+  )
+}
 
-export default Detail;
+export default Detail

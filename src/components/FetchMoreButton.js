@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const Button = styled.button`
   padding: 15px 50px;
@@ -23,10 +23,10 @@ const Button = styled.button`
     opacity: 0.8;
     cursor: default;
   }
-`;
+`
 
 const FetchMoreButton = ({ children, ...props }) => {
-  return <Button {...props}>{children}</Button>;
-};
+  return <Button {...props}>{children}</Button>
+}
 
-export default FetchMoreButton;
+export default FetchMoreButton

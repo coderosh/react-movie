@@ -1,9 +1,9 @@
-import { Link } from "@reach/router";
-import React from "react";
-import styled from "styled-components";
-import Flex from "./Flex";
+import { Link } from '@reach/router'
+import React from 'react'
+import styled from 'styled-components'
+import Flex from './Flex'
 
-import NotFoundImage from "../not-found-image.jpg";
+import NotFoundImage from '../not-found-image.jpg'
 
 const MovieWrapper = styled.div`
   overflow: hidden;
@@ -19,7 +19,7 @@ const MovieWrapper = styled.div`
   &:hover {
     opacity: 0.8;
   }
-`;
+`
 
 const Movie = ({ data }) => (
   <Flex justify="center">
@@ -35,6 +35,6 @@ const Movie = ({ data }) => (
       </Link>
     </MovieWrapper>
   </Flex>
-);
+)
 
-export default Movie;
+export default Movie

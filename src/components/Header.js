@@ -1,21 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "@reach/router";
-import { FaGithub } from "react-icons/fa";
+import React from 'react'
+import styled from 'styled-components'
+import { Link } from '@reach/router'
+import { FaGithub } from 'react-icons/fa'
 
-import Container from "./Container";
-import Flex from "./Flex";
+import Container from './Container'
+import Flex from './Flex'
 
 const Navbar = styled.div`
   height: 60px;
   background: #1c1c1c;
-`;
+`
 
 const Logo = styled.p`
   font-size: 20px;
   font-family: cursive;
   font-weight: 600;
-`;
+`
 
 function Header() {
   return (
@@ -29,7 +29,7 @@ function Header() {
         </a>
       </Container>
     </Navbar>
-  );
+  )
 }
 
-export default Header;
+export default Header

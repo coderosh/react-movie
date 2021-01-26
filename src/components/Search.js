@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { FaSearch } from "react-icons/fa";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { FaSearch } from 'react-icons/fa'
 
-import Container from "./Container";
-import Flex from "./Flex";
+import Container from './Container'
+import Flex from './Flex'
 
 const StyledInput = styled.input`
   width: 100%;
@@ -15,30 +15,30 @@ const StyledInput = styled.input`
   padding: 10px;
   color: #222;
   font-size: 20px;
-`;
+`
 
 const Form = styled.form`
   width: 100%;
   z-index: 20px;
   padding: 50px 0;
-`;
+`
 
 const StyledInputWrapper = styled.div`
   background: #fff;
   border-radius: 25px;
   padding: 0 15px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.54);
-`;
+`
 
 const Search = ({ onSubmit }) => {
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const value = e.target.movie.value.trim()
-      ? "query=" + e.target.movie.value.trim()
-      : "movie/popular";
+      ? 'query=' + e.target.movie.value.trim()
+      : 'movie/popular'
 
-    onSubmit(value);
-  };
+    onSubmit(value)
+  }
 
   return (
     <Form onSubmit={onSubmitHandler}>
@@ -49,7 +49,7 @@ const Search = ({ onSubmit }) => {
         </StyledInputWrapper>
       </Container>
     </Form>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

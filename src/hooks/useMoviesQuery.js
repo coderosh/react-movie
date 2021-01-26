@@ -1,17 +1,17 @@
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from 'react-query'
 
-import get from "../get";
+import get from '../get'
 
 const fetchMovies = async (endpoint, page = 1) => {
-  let url;
-  if (endpoint === "movie/popular") {
-    url = `https://api.themoviedb.org/3/${endpoint}`;
+  let url
+  if (endpoint === 'movie/popular') {
+    url = `https://api.themoviedb.org/3/${endpoint}`
   } else {
-    url = `https://api.themoviedb.org/3/search/movie?${endpoint}`;
+    url = `https://api.themoviedb.org/3/search/movie?${endpoint}`
   }
 
-  return await get(url, { page, api_key: process.env.API_KEY });
-};
+  return await get(url, { page, api_key: process.env.API_KEY })
+}
 
 const useMoviesQuery = (endpoint) => {
   return useInfiniteQuery(endpoint, fetchMovies, {
@@ -20,10 +20,10 @@ const useMoviesQuery = (endpoint) => {
     enabled: endpoint,
     getFetchMore: (lastPage) => {
       const newPage =
-        lastPage.page + 1 <= lastPage.total_pages ? lastPage.page + 1 : null;
-      return newPage;
+        lastPage.page + 1 <= lastPage.total_pages ? lastPage.page + 1 : null
+      return newPage
     },
-  });
-};
+  })
+}
 
-export default useMoviesQuery;
+export default useMoviesQuery
